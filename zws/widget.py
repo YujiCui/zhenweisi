@@ -40,7 +40,7 @@ def mix(a, b, t):
 
 
 class App:
-    def __init__(self, home, now=None, selftest=None):
+    def __init__(self, home, now=None, selftest=None, ghost=None):
         self.store = Store(home).load()
         self.fixed_now = now
         self.selftest = selftest
@@ -85,7 +85,8 @@ class App:
         self.fm = {"base": tkfont.Font(family=fam, size=10), "small": tkfont.Font(family=fam, size=9)}    # 量字宽用
         self.last_reply = ""
         self.outer = None
-        self.ghost = bool(selftest) and os.name == "nt"        # 自检时窗口几乎全透明、鼠标穿透，不打扰主人
+        # 自检和测试时窗口几乎全透明、鼠标穿透，不打扰正在用电脑的人
+        self.ghost = (bool(selftest) if ghost is None else bool(ghost)) and os.name == "nt"
         self.build()
         self.place()
         self.root.deiconify()
@@ -98,7 +99,8 @@ class App:
         self.root.bind_all("<Button-4>", lambda e: self.scroll(-1))
         self.root.bind_all("<Button-5>", lambda e: self.scroll(1))
         self.root.bind_all("<Escape>", lambda e: self.close_popups())
-        self.root.after(1000, self.tick)
+        self.closed = False
+        self.tick_job = self.root.after(1000, self.tick)
         if selftest:
             self.root.after(400, self.run_selftest)
 
@@ -358,10 +360,17 @@ class App:
         self.canvas.yview_scroll(n * 2, "units")
 
     def quit(self):
+        self.closed = True
         try:
             self.save_review()
             self.store.save()
         finally:
+            for job in (self.tick_job, self.review_job):        # 取消还没触发的定时器，再销毁窗口
+                if job:
+                    try:
+                        self.root.after_cancel(job)
+                    except tk.TclError:
+                        pass
             self.store.unlock()
             self.root.destroy()
 
@@ -1134,7 +1143,8 @@ class App:
             elif self.ticks % 5 == 0 or (self.reply_until and time.time() > self.reply_until):
                 self.render()
         finally:
-            self.root.after(1000, self.tick)
+            if not self.closed:
+                self.tick_job = self.root.after(1000, self.tick)
 
     # ---------------- 自检：把每个页面走一遍并截图 ----------------
     def run_selftest(self):

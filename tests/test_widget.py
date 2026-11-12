@@ -75,5 +75,66 @@ class Selftest(unittest.TestCase):
         self.assertIn("模块没开", dict(report["replies"])["专注 25"])
 
 
+@unittest.skipUnless(os.name == "nt", "进程内开窗口的测试只在 Windows 上跑（窗口不可见）")
+class Ask(unittest.TestCase):
+    """「问 …」是浮窗里唯一会调模型的地方。这里用假的 claude 走完整条路：提问、后台线程、回到界面、弹出回答。"""
+
+    def setUp(self):
+        from datetime import datetime
+        from unittest import mock
+        from zws import claude_cli, widget
+        self.tmp = Path(tempfile.mkdtemp(prefix="zws-test-"))
+        self.env = dict(os.environ)
+        patcher = mock.patch.object(claude_cli, "extra_usage", return_value=False)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        home = self.tmp / "home"
+        home.mkdir()
+        plan = helpers.base_plan("student")
+        plan["modules"]["qa"] = True
+        plan["owner"]["floors"] = ["不熬过 00:30"]
+        store.write_json(home / "plan.json", plan)
+        self.widget, self.home, self.now = widget, home, datetime(2026, 11, 12, 21, 15)
+
+    def tearDown(self):
+        os.environ.clear()
+        os.environ.update(self.env)
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def ask(self, question, auth=None):
+        helpers.fake_claude(self.tmp, ["先做听力，再写作业。"], auth=auth)
+        app = self.widget.App(self.home, now=self.now, ghost=True)
+        try:
+            app.run_command("问 " + question)
+            import time
+            t0 = time.time()
+            while app.asking and time.time() - t0 < 60:
+                app.root.update()
+                app.poll_answers()
+                time.sleep(0.05)
+            self.assertFalse(app.asking, "60 秒内没有等到回答")
+            text = app.popups[0].winfo_children()[0].winfo_children()[-1].get("1.0", "end-1c") if app.popups else None
+            return text, app.last_reply
+        finally:
+            app.quit()
+
+    def test_answer_arrives_in_a_popup(self):
+        text, reply = self.ask("今晚先做什么")
+        self.assertEqual(text, "先做听力，再写作业。")
+        sent = (self.tmp / "prompt0.txt").read_text(encoding="utf-8")
+        for part in ("【问题】\n今晚先做什么", "现在：2026-11-12 21:15", "主人的底线：不熬过 00:30", "背单词 30 个（未做）"):
+            self.assertIn(part, sent)
+        args = json.loads((self.tmp / "args0.json").read_text(encoding="utf-8"))
+        self.assertEqual(args[args.index("--tools") + 1], "")           # 问答不带任何工具
+        self.assertEqual(args[args.index("--max-budget-usd") + 1], "0.3")
+        self.assertFalse(any("今晚先做什么" in a for a in args))          # 问题只走标准输入
+
+    def test_metered_login_is_refused_without_calling(self):
+        text, reply = self.ask("今晚先做什么", auth={"loggedIn": True, "authMethod": "api_key", "apiProvider": "firstParty"})
+        self.assertIsNone(text)
+        self.assertIn("只在订阅登录", reply)
+        self.assertEqual(helpers.fake_calls(self.tmp), 0)
+
+
 if __name__ == "__main__":
     unittest.main()

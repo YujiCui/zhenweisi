@@ -77,7 +77,6 @@ def main():
         canvas.save(OUT / "widget.png", optimize=True)
 
         # 2. 生成器：填表页和结果页
-        shutil.rmtree(home / ".lock", ignore_errors=True)
         srv, _app = server.make_server(0, strict=True)
         threading.Thread(target=srv.serve_forever, daemon=True).start()
         base = f"http://127.0.0.1:{srv.server_address[1]}/"

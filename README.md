@@ -116,7 +116,7 @@ tools/           重新生成本页截图的脚本
 python -m unittest discover -s tests
 ```
 
-共 109 项。测试不联网，不调真的 Claude Code（用一个假的命令行程序代替）。浮窗的测试会真的开窗口，Windows 上这个窗口几乎全透明、鼠标穿透，不影响你操作。
+共 111 项。测试不联网，不调真的 Claude Code（用一个假的命令行程序代替）。浮窗的测试会真的开窗口，Windows 上这个窗口几乎全透明、鼠标穿透，不影响你操作。单跑一个文件用 `python tests/test_brain.py`。
 
 ## 已知限制
 
