@@ -1,0 +1,13 @@
+# user data: every generated assistant lives here
+assistants/
+
+__pycache__/
+*.pyc
+*.tmp
+error.log
+.lock
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.claude/

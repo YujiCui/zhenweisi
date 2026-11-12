@@ -1,0 +1,22 @@
+{
+  "owner": "陈默",
+  "assistant": "灯塔",
+  "role": "freelance",
+  "tone": "strict",
+  "accent": "#d4a017",
+  "wake": {"workday": "09:00", "restday": "10:00"},
+  "sleep": {"workday": "00:30", "restday": "01:00"},
+  "rest_days": ["sun"],
+  "fixed": [
+    {"name": "客户例会", "type": "meeting", "days": ["wed"], "start": "14:00", "end": "15:00"}
+  ],
+  "modules": {"schedule": true, "todo": true, "habits": true, "focus": true, "review": true, "memory": true,
+              "countdowns": true, "water": false, "nutrition": false, "training": false, "maintenance": false,
+              "people": true, "qa": false},
+  "focus_min": 50,
+  "habits": ["发一条作品动态"],
+  "goals": [{"name": "作品集网站上线", "date": "2027-01-31"}],
+  "floors": ["不接低于报价七折的单"],
+  "people": [{"name": "老客户回访", "every": 30, "topic": "问问有没有新需求"}],
+  "about": "自由插画师，在家接稿。没有人管，上午基本废掉，下午才进状态，交稿总是踩线。想把最难的画稿放在精力最好的时段，报价和沟通集中到一个固定时间处理，不要一有消息就回。"
+}

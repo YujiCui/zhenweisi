@@ -1,0 +1,29 @@
+{
+  "owner": "周然",
+  "assistant": "阿默",
+  "role": "office",
+  "tone": "warm",
+  "accent": "#35b4c4",
+  "wake": {"workday": "07:00", "restday": "08:30"},
+  "sleep": {"workday": "23:00", "restday": "23:30"},
+  "rest_days": ["sat", "sun"],
+  "fixed": [
+    {"name": "通勤", "type": "commute", "days": ["mon", "tue", "wed", "thu", "fri"], "start": "08:15", "end": "09:00"},
+    {"name": "上班", "type": "work", "days": ["mon", "tue", "wed", "thu", "fri"], "start": "09:00", "end": "18:30"},
+    {"name": "部门周会", "type": "meeting", "days": ["mon"], "start": "19:00", "end": "20:00"}
+  ],
+  "modules": {"schedule": true, "todo": true, "habits": true, "focus": true, "review": true, "memory": true,
+              "countdowns": true, "water": true, "nutrition": true, "training": false, "maintenance": true,
+              "people": true, "qa": false},
+  "water_goal_ml": 1800,
+  "kcal": 1900,
+  "protein": 110,
+  "focus_min": 40,
+  "habits": ["晚饭后散步 20 分"],
+  "goals": [{"name": "拿到数据分析师认证", "date": "2027-03-20"}],
+  "floors": ["工作日不带电脑回家"],
+  "countdowns": [{"name": "体检", "date": "2026-12-05"}],
+  "maintenance": [{"name": "换滤芯", "every": 90}, {"name": "给猫驱虫", "every": 30}],
+  "people": [{"name": "爸妈", "every": 7, "topic": "视频通话"}],
+  "about": "在做运营，想转数据分析。下班后很累，报的课一直没看，希望每周有三个晚上各学一小时。午饭常点外卖，热量超标。久坐，下午三四点犯困。"
+}

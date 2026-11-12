@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="zws-token" content="__ZWS_TOKEN__">
+<title>真维斯 · 生成你的桌面助手</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <span class="mark" aria-hidden="true"></span>
+    <span class="name">真维斯</span>
+    <span class="tag">填一份需求，生成你自己的桌面助手</span>
+  </div>
+  <button class="btn ghost" id="btn-mine" type="button">我的助手<span class="count" id="mine-count"></span></button>
+</header>
+
+<main class="wrap">
+  <section class="form" aria-label="需求表">
+    <ol class="steps" id="steps"></ol>
+
+    <div class="panel" data-step="0">
+      <h2>先认识一下</h2>
+      <p class="lead">这些决定助手怎么称呼你、用什么语气说话。</p>
+      <div class="grid2">
+        <label class="field"><span class="lab">怎么称呼你</span>
+          <input type="text" data-k="owner" maxlength="12" placeholder="例：小林" autocomplete="off"></label>
+        <label class="field"><span class="lab">给助手起个名字</span>
+          <input type="text" data-k="assistant" maxlength="12" placeholder="真维斯" autocomplete="off"></label>
+      </div>
+      <div class="field"><span class="lab">你现在的主要身份</span>
+        <div class="chips" data-chips="role"></div></div>
+      <div class="field"><span class="lab">它说话的语气</span>
+        <div class="chips" data-chips="tone"></div>
+        <p class="hint">语气只影响 AI 为你写的提醒和问候；内置提醒的措辞是固定的。</p></div>
+      <div class="field"><span class="lab">浮窗主色</span>
+        <div class="swatches" id="swatches"></div></div>
+      <div class="examples">
+        <span>不知道怎么填？载入一份示例：</span>
+        <span id="example-btns"></span>
+      </div>
+    </div>
+
+    <div class="panel" data-step="1" hidden>
+      <h2>作息和固定安排</h2>
+      <p class="lead">起床、睡觉，和每周固定占用的时间。助手围着它们排其余的事，不会改动它们。</p>
+      <div class="grid4">
+        <label class="field"><span class="lab">工作日起床</span><input type="time" data-k="wake.workday"></label>
+        <label class="field"><span class="lab">工作日睡觉</span><input type="time" data-k="sleep.workday"></label>
+        <label class="field"><span class="lab">休息日起床</span><input type="time" data-k="wake.restday"></label>
+        <label class="field"><span class="lab">休息日睡觉</span><input type="time" data-k="sleep.restday"></label>
+      </div>
+      <p class="hint">睡觉时间按「第二天是不是休息日」取：周五晚上用休息日的睡觉时间。凌晨 5 点前仍算前一天。</p>
+      <div class="field"><span class="lab">哪几天是休息日</span>
+        <div class="chips" data-chips="rest_days" data-multi="1"></div></div>
+      <div class="field"><span class="lab">每周固定的安排</span>
+        <p class="hint">上课、上班、例会、接送孩子这类到点必须在的事。没有就空着。</p>
+        <div class="rows" id="rows-fixed"></div>
+        <button class="btn small" type="button" data-add="fixed">加一项</button>
+      </div>
+    </div>
+
+    <div class="panel" data-step="2" hidden>
+      <h2>要它管什么</h2>
+      <p class="lead">只开用得上的。关着的模块不会出现在浮窗里，之后改 plan.json 可以随时开关。</p>
+      <div class="modules" id="modules"></div>
+    </div>
+
+    <div class="panel" data-step="3" hidden>
+      <h2>用自己的话说</h2>
+      <p class="lead">目标是什么，卡在哪，希望它在什么情况下提醒你什么。写得越具体，生成的越贴合。这一段只在用 AI 生成时起作用。</p>
+      <textarea data-k="about" id="about" rows="9" maxlength="2000"
+        placeholder="例：晚上容易刷手机拖到一点多才睡，第二天早课起不来。想在 12 月把六级过了，每天要背单词、做一套听力。作业经常压到截止前一天晚上才写。"></textarea>
+      <div class="counter"><span id="about-count">0</span> / 2000</div>
+      <div class="field"><span class="lab">目标</span>
+        <p class="hint">写了日期的，临近时会提醒。</p>
+        <div class="rows" id="rows-goals"></div>
+        <button class="btn small" type="button" data-add="goals">加一个目标</button>
+      </div>
+      <div class="field"><span class="lab">底线</span>
+        <p class="hint">不管怎样都不做的事。助手回答问题时会把它们当作约束。</p>
+        <div class="rows" id="rows-floors"></div>
+        <button class="btn small" type="button" data-add="floors">加一条底线</button>
+      </div>
+    </div>
+
+    <div class="panel" data-step="4" hidden>
+      <h2>生成</h2>
+      <p class="lead">选一种方式。AI 只产出配置数据；固定安排、作息和模块开关以你填的为准，AI 改不了。</p>
+      <div class="engines" id="engines"></div>
+      <div class="engine-opts" id="engine-opts"></div>
+      <div class="genrow">
+        <button class="btn primary big" id="btn-gen" type="button">生成助手</button>
+        <button class="btn small" id="btn-cancel" type="button" hidden>取消</button>
+        <span class="status" id="gen-status" role="status" aria-live="polite"></span>
+      </div>
+
+      <div id="result" hidden>
+        <div class="stale" id="stale" hidden>表单在生成之后改过。下面的结果是按修改前的内容生成的，重新生成后才会生效。</div>
+        <h3>生成结果</h3>
+        <ul class="notes" id="res-notes"></ul>
+        <ul class="warns" id="res-warns"></ul>
+        <div class="sections" id="res-sections"></div>
+        <details class="adv">
+          <summary>查看或修改 plan.json</summary>
+          <textarea id="plan-json" rows="18" spellcheck="false"></textarea>
+          <div class="advrow">
+            <button class="btn small" id="btn-apply-json" type="button">校验并应用</button>
+            <span class="status" id="json-status"></span>
+          </div>
+        </details>
+        <div class="launch">
+          <button class="btn primary big" id="btn-launch" type="button">启动助手</button>
+          <button class="btn" id="btn-desktop" type="button">建桌面快捷方式</button>
+          <button class="btn" id="btn-startup" type="button">开机自启</button>
+        </div>
+        <div class="choice" id="exists-choice" hidden>
+          <span id="exists-text"></span>
+          <button class="btn small primary" type="button" data-mode="update">更新它，保留打勾记录</button>
+          <button class="btn small" type="button" data-mode="new">另建一个</button>
+        </div>
+        <p class="status" id="launch-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="navrow">
+      <button class="btn" id="btn-prev" type="button">上一步</button>
+      <span class="grow"></span>
+      <button class="btn primary" id="btn-next" type="button">下一步</button>
+    </div>
+  </section>
+
+  <aside class="preview" aria-label="预览">
+    <div class="pv-head">
+      <span class="pv-title">浮窗预览</span>
+      <div class="daychips" id="pv-days"></div>
+    </div>
+    <div class="widget" id="widget">
+      <div class="w-title">
+        <span class="w-dot"></span><span class="w-name" id="w-name">真维斯</span>
+        <span class="w-date" id="w-date"></span>
+        <span class="w-btns" aria-hidden="true"><i class="ic-min"></i><i class="ic-x"></i></span>
+      </div>
+      <div class="w-now">
+        <div class="w-nowtext" id="w-now"></div>
+        <div class="w-prog"><i id="w-prog"></i></div>
+      </div>
+      <div class="w-bar">
+        <span class="w-bartext" id="w-bar"></span>
+        <span class="w-acts" id="w-acts"><b>采纳</b><b>不用</b></span>
+      </div>
+      <div class="w-tabs" id="w-tabs"></div>
+      <div class="w-body" id="w-body"></div>
+      <div class="w-cmd">输入指令，? 看全部</div>
+    </div>
+    <p class="pv-note" id="pv-note"></p>
+  </aside>
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="我的助手">
+  <div class="drawer-head">
+    <h2>我的助手</h2>
+    <button class="btn ghost small" id="btn-close-drawer" type="button">关闭</button>
+  </div>
+  <p class="hint" id="mine-dir"></p>
+  <div id="mine-list"></div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

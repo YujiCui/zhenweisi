@@ -1,0 +1,26 @@
+{
+  "owner": "小林",
+  "assistant": "真维斯",
+  "role": "student",
+  "tone": "direct",
+  "accent": "#a07cf2",
+  "wake": {"workday": "07:30", "restday": "09:00"},
+  "sleep": {"workday": "23:30", "restday": "00:30"},
+  "rest_days": ["sat", "sun"],
+  "fixed": [
+    {"name": "上课", "type": "class", "days": ["mon", "wed", "fri"], "start": "08:30", "end": "12:00"},
+    {"name": "上课", "type": "class", "days": ["tue", "thu"], "start": "13:30", "end": "17:00"}
+  ],
+  "modules": {"schedule": true, "todo": true, "habits": true, "focus": true, "review": true, "memory": true,
+              "countdowns": true, "water": true, "nutrition": false, "training": true, "maintenance": false,
+              "people": false, "qa": false},
+  "water_goal_ml": 2000,
+  "train_per_week": 3,
+  "train_note": "力量训练",
+  "focus_min": 25,
+  "habits": ["背单词 30 个", "阅读 20 分"],
+  "goals": [{"name": "六级考到 550 分", "date": "2026-12-12"}],
+  "floors": ["不熬过 00:30"],
+  "countdowns": [{"name": "期末考试周", "date": "2027-01-11"}],
+  "about": "大三，计算机专业。晚上容易刷手机拖到一点多才睡，第二天早课起不来。想在 12 月把六级过了，每天要背单词、做一套听力。每周想练三次力量，现在总是因为作业拖着没去。作业经常压到截止前一天晚上才写。"
+}

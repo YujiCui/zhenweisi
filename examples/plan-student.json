@@ -1,0 +1,626 @@
+{
+ "version": 1,
+ "assistant": {
+  "name": "真维斯",
+  "owner": "小林",
+  "tone": "direct",
+  "accent": "#a07cf2",
+  "lines": {
+   "morning": "先吃早餐，按时到教室。",
+   "day": "作业先做最早截止的那项。",
+   "night": "22:45 放下手机，23:30 睡。"
+  }
+ },
+ "modules": {
+  "schedule": true,
+  "todo": true,
+  "habits": true,
+  "focus": true,
+  "review": true,
+  "memory": true,
+  "countdowns": true,
+  "water": true,
+  "nutrition": false,
+  "training": true,
+  "maintenance": false,
+  "people": false,
+  "qa": false
+ },
+ "day_start": "05:00",
+ "wake": {
+  "default": "07:30",
+  "sat": "09:00",
+  "sun": "09:00"
+ },
+ "sleep": {
+  "default": "23:30",
+  "fri": "00:30",
+  "sat": "00:30"
+ },
+ "wrap_before_sleep": 45,
+ "day_types": {
+  "class": "上课日（周一三五）",
+  "class2": "上课日（周二四）",
+  "rest": "休息日"
+ },
+ "week": {
+  "mon": "class",
+  "tue": "class2",
+  "wed": "class",
+  "thu": "class2",
+  "fri": "class",
+  "sat": "rest",
+  "sun": "rest"
+ },
+ "templates": {
+  "class": [
+   {
+    "t": "07:40",
+    "name": "早餐",
+    "type": "meal",
+    "m": 25
+   },
+   {
+    "t": "08:05",
+    "name": "去教室",
+    "type": "commute",
+    "m": 20
+   },
+   {
+    "t": "08:30",
+    "name": "上课",
+    "type": "class",
+    "m": 210,
+    "dnd": true,
+    "fixed": true
+   },
+   {
+    "t": "12:10",
+    "name": "午饭",
+    "type": "meal",
+    "m": 40
+   },
+   {
+    "t": "12:50",
+    "name": "午休",
+    "type": "rest",
+    "m": 30
+   },
+   {
+    "t": "13:30",
+    "name": "作业",
+    "type": "study",
+    "m": 120,
+    "dnd": true,
+    "note": "先做最早截止的那项，当天布置当天开头"
+   },
+   {
+    "t": "15:40",
+    "name": "力量训练",
+    "type": "train",
+    "m": 75,
+    "dnd": true,
+    "note": "作业做到这里就停，按队列练",
+    "days": [
+     "mon",
+     "wed"
+    ]
+   },
+   {
+    "t": "17:10",
+    "name": "六级听力",
+    "type": "study",
+    "m": 60,
+    "dnd": true,
+    "note": "一套听力，对答案后精听错题"
+   },
+   {
+    "t": "18:15",
+    "name": "晚饭",
+    "type": "meal",
+    "m": 45
+   },
+   {
+    "t": "19:00",
+    "name": "自由",
+    "type": "free",
+    "m": 60
+   },
+   {
+    "t": "20:00",
+    "name": "作业与复习",
+    "type": "study",
+    "m": 90,
+    "dnd": true
+   },
+   {
+    "t": "21:30",
+    "name": "背单词与阅读",
+    "type": "study",
+    "m": 40
+   },
+   {
+    "t": "22:15",
+    "name": "复盘",
+    "type": "rest",
+    "m": 30
+   },
+   {
+    "t": "22:45",
+    "name": "放下手机",
+    "type": "rest",
+    "m": 45,
+    "note": "手机放到床够不着的地方充电"
+   }
+  ],
+  "class2": [
+   {
+    "t": "07:40",
+    "name": "早餐",
+    "type": "meal",
+    "m": 25
+   },
+   {
+    "t": "08:15",
+    "name": "六级听力",
+    "type": "study",
+    "m": 60,
+    "dnd": true,
+    "note": "一套听力，对答案后精听错题"
+   },
+   {
+    "t": "09:25",
+    "name": "作业",
+    "type": "study",
+    "m": 120,
+    "dnd": true,
+    "note": "先做最早截止的那项"
+   },
+   {
+    "t": "11:35",
+    "name": "背单词",
+    "type": "study",
+    "m": 30
+   },
+   {
+    "t": "12:10",
+    "name": "午饭",
+    "type": "meal",
+    "m": 40
+   },
+   {
+    "t": "12:50",
+    "name": "午休",
+    "type": "rest",
+    "m": 30
+   },
+   {
+    "t": "13:30",
+    "name": "上课",
+    "type": "class",
+    "m": 210,
+    "dnd": true,
+    "fixed": true
+   },
+   {
+    "t": "17:15",
+    "name": "自由",
+    "type": "free",
+    "m": 60
+   },
+   {
+    "t": "18:15",
+    "name": "晚饭",
+    "type": "meal",
+    "m": 45
+   },
+   {
+    "t": "19:00",
+    "name": "作业与复习",
+    "type": "study",
+    "m": 120,
+    "dnd": true
+   },
+   {
+    "t": "21:00",
+    "name": "自由",
+    "type": "free",
+    "m": 60
+   },
+   {
+    "t": "22:00",
+    "name": "阅读",
+    "type": "study",
+    "m": 25
+   },
+   {
+    "t": "22:25",
+    "name": "复盘",
+    "type": "rest",
+    "m": 20
+   },
+   {
+    "t": "22:45",
+    "name": "放下手机",
+    "type": "rest",
+    "m": 45,
+    "note": "手机放到床够不着的地方充电"
+   }
+  ],
+  "rest": [
+   {
+    "t": "09:15",
+    "name": "早餐",
+    "type": "meal",
+    "m": 30
+   },
+   {
+    "t": "10:00",
+    "name": "六级听力",
+    "type": "study",
+    "m": 60,
+    "dnd": true,
+    "note": "周末可做整套模考听力"
+   },
+   {
+    "t": "11:10",
+    "name": "背单词",
+    "type": "study",
+    "m": 30
+   },
+   {
+    "t": "12:00",
+    "name": "午饭",
+    "type": "meal",
+    "m": 45
+   },
+   {
+    "t": "13:00",
+    "name": "下周作业",
+    "type": "study",
+    "m": 120,
+    "dnd": true,
+    "note": "下周截止的作业每项先写个开头"
+   },
+   {
+    "t": "15:15",
+    "name": "力量训练",
+    "type": "train",
+    "m": 75,
+    "dnd": true,
+    "days": [
+     "sat"
+    ]
+   },
+   {
+    "t": "16:30",
+    "name": "杂务与采购",
+    "type": "chore",
+    "m": 90
+   },
+   {
+    "t": "18:15",
+    "name": "晚饭",
+    "type": "meal",
+    "m": 45
+   },
+   {
+    "t": "19:00",
+    "name": "自由",
+    "type": "free",
+    "m": 150
+   },
+   {
+    "t": "21:30",
+    "name": "阅读",
+    "type": "study",
+    "m": 30
+   },
+   {
+    "t": "22:00",
+    "name": "复盘",
+    "type": "rest",
+    "m": 30
+   },
+   {
+    "t": "22:45",
+    "name": "放下手机",
+    "type": "rest",
+    "m": 45
+   }
+  ]
+ },
+ "habits": [
+  {
+   "name": "背单词 30 个",
+   "by": "22:15"
+  },
+  {
+   "name": "阅读 20 分",
+   "by": "22:30"
+  },
+  {
+   "name": "六级听力一套",
+   "by": "21:00"
+  }
+ ],
+ "water": {
+  "cup_ml": 250,
+  "goal_ml": 2000
+ },
+ "nutrition": {
+  "kcal": 0,
+  "protein": 0,
+  "quick_food": []
+ },
+ "training": {
+  "mode": "queue",
+  "queue": [
+   "push",
+   "pull",
+   "legs"
+  ],
+  "split": {
+   "mon": null,
+   "tue": null,
+   "wed": null,
+   "thu": null,
+   "fri": null,
+   "sat": null,
+   "sun": null
+  },
+  "programs": {
+   "push": {
+    "name": "推",
+    "ex": [
+     [
+      "卧推",
+      4,
+      "6–8"
+     ],
+     [
+      "上斜哑铃推",
+      3,
+      "8–10"
+     ],
+     [
+      "肩推",
+      3,
+      "8–10"
+     ],
+     [
+      "侧平举",
+      3,
+      "12–15"
+     ],
+     [
+      "三头下压",
+      3,
+      "10–12"
+     ]
+    ]
+   },
+   "pull": {
+    "name": "拉",
+    "ex": [
+     [
+      "引体或下拉",
+      4,
+      "6–10"
+     ],
+     [
+      "杠铃划船",
+      4,
+      "8"
+     ],
+     [
+      "坐姿划船",
+      3,
+      "10"
+     ],
+     [
+      "面拉",
+      3,
+      "15"
+     ],
+     [
+      "弯举",
+      3,
+      "10–12"
+     ]
+    ]
+   },
+   "legs": {
+    "name": "腿",
+    "ex": [
+     [
+      "深蹲",
+      4,
+      "5–8"
+     ],
+     [
+      "罗马尼亚硬拉",
+      3,
+      "8"
+     ],
+     [
+      "腿举",
+      3,
+      "10–12"
+     ],
+     [
+      "腿弯举",
+      3,
+      "10–12"
+     ],
+     [
+      "提踵",
+      4,
+      "12–15"
+     ]
+    ]
+   }
+  }
+ },
+ "countdowns": [
+  {
+   "name": "期末考试周",
+   "date": "2027-01-11"
+  }
+ ],
+ "maintenance": [],
+ "people": [],
+ "goals": [
+  {
+   "name": "六级考到 550 分",
+   "date": "2026-12-12",
+   "metric": "每天一套听力，考前模考稳定在 550 分以上"
+  }
+ ],
+ "owner": {
+  "priorities": [
+   "睡眠",
+   "六级",
+   "作业",
+   "训练",
+   "阅读"
+  ],
+  "floors": [
+   "不熬过 00:30"
+  ]
+ },
+ "rules": [
+  {
+   "id": "phone_down_school_night",
+   "when": {
+    "after": "22:45",
+    "weekdays": [
+     "mon",
+     "tue",
+     "wed",
+     "thu",
+     "sun"
+    ]
+   },
+   "say": "明天有课，现在把手机放远，准备睡。",
+   "why": "你说晚上刷手机拖到一点多，第二天早课起不来。",
+   "priority": 60,
+   "tab": "schedule",
+   "cooldown_min": 180
+  },
+  {
+   "id": "floor_0030",
+   "when": {
+    "past_sleep_min": 60,
+    "weekdays": [
+     "mon",
+     "tue",
+     "wed",
+     "thu",
+     "sun"
+    ]
+   },
+   "say": "已过 00:30，这是你给自己定的底线，现在睡。",
+   "why": "不熬过 00:30 是你定的底线，过了这个点第二天上课会受影响。",
+   "priority": 85,
+   "tab": "schedule",
+   "cooldown_min": 180
+  },
+  {
+   "id": "early_class_wake",
+   "when": {
+    "after": "07:35",
+    "before": "08:00",
+    "weekdays": [
+     "mon",
+     "wed",
+     "fri"
+    ]
+   },
+   "say": "8:30 有课，现在起床吃早餐。",
+   "why": "周一三五 8:30 上课，你说早课常起不来。",
+   "priority": 70,
+   "tab": "schedule",
+   "cooldown_min": 180
+  },
+  {
+   "id": "homework_early",
+   "when": {
+    "todo_due_within_h": 48,
+    "before": "18:00"
+   },
+   "say": "两天内有作业截止，今天白天先写，别留到前一晚。",
+   "why": "你说作业常压到截止前一天晚上才写，提前一天动手能避免熬夜。",
+   "priority": 55,
+   "tab": "todo",
+   "cooldown_min": 180
+  },
+  {
+   "id": "train_dont_skip",
+   "when": {
+    "training_undone": true,
+    "weekdays": [
+     "mon",
+     "wed",
+     "sat"
+    ],
+    "after": "15:30",
+    "before": "17:00"
+   },
+   "say": "今天是训练日，作业先停在这里，去训练。",
+   "why": "你每周想练三次，现在总因为作业拖着没去；训练后还有晚间作业时段。",
+   "priority": 50,
+   "tab": "log",
+   "cooldown_min": 180
+  },
+  {
+   "id": "cet_listening",
+   "when": {
+    "habit_undone": "六级听力一套",
+    "after": "19:30"
+   },
+   "say": "今天的六级听力还没做，先做这一套。",
+   "why": "12 月考六级，你计划每天一套听力。",
+   "priority": 45,
+   "tab": "log",
+   "cooldown_min": 180
+  },
+  {
+   "id": "behind_schedule",
+   "when": {
+    "done_pct_below": 50,
+    "after": "16:00"
+   },
+   "say": "今天完成不到一半，晚上先补作业，自由时间往后放。",
+   "why": "白天落下的事容易拖到深夜，进而推迟睡觉。",
+   "priority": 40,
+   "tab": "schedule",
+   "cooldown_min": 180
+  },
+  {
+   "id": "sunday_plan_homework",
+   "when": {
+    "weekdays": [
+     "sun"
+    ],
+    "after": "19:00",
+    "todo_open_at_least": 1
+   },
+   "say": "把下周作业列进待办，每项标上截止日。",
+   "why": "作业有截止日，提醒才能提前触发，避免压到最后一晚。",
+   "priority": 35,
+   "tab": "todo",
+   "cooldown_min": 180
+  }
+ ],
+ "review_template": "今天作业推进了多少：\n几点放下的手机：\n明天最先做的一件事：\n",
+ "focus_min": 25,
+ "qa": {
+  "model": "sonnet",
+  "claude_path": ""
+ },
+ "ui": {
+  "alpha": 1.0,
+  "width": 360
+ }
+}
